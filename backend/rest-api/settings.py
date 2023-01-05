@@ -21,7 +21,7 @@ class DatabaseSettings(Settings):
     database_uri: Computed[PostgresDsn]
     @computed('database_uri')
     def compute_database_uri(database_username: str, database_password: str, database_name: str):
-        return f'postgresql+psycopg2://{database_username}:{database_password}@localhost:5432/{database_name}'
+        return f'postgresql+psycopg2://{database_username}:{database_password}@database:5432/{database_name}'
 
 class AuthSettings(Settings):
     """The authentication settings"""

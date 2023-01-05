@@ -20,15 +20,21 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-    volumes:
-      - ./data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - backend
+    volumes:
+      - ./data:/var/lib/postgresql/data
   api:
-    image: api:latest
+    build: ./backend/rest-api
+    # image: api:latest
+    restart: always
     ports:
       - 8000:80
-    restart: always
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - backend
 
+networks:
+  backend:
+    driver: bridge

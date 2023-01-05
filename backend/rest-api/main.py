@@ -1,4 +1,4 @@
-from settings import AuthSettings
+from settings import AuthSettings, DatabaseSettings
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi import FastAPI, Request
@@ -16,6 +16,7 @@ with open('./log-config.yaml', 'r') as stream:
 logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
 logger.info('Setup app')
+logger.info(f'connect to to database: {DatabaseSettings().database_uri}')
 setup_database()
 
 app = FastAPI()
