@@ -1,4 +1,4 @@
-from settings import AuthSettings, DatabaseSettings
+from settings import AuthSettings, DatabaseSettings, AppSettings
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi import FastAPI, Request
@@ -19,11 +19,19 @@ logger.info('Setup app')
 logger.info(f'connect to to database: {DatabaseSettings().database_uri}')
 setup_database()
 
-app = FastAPI()
+app = FastAPI(servers=[
+    {
+        'url': f'http://{AppSettings().app_host}:{AppSettings().app_port}' 
+    }
+])
 
 allowed_origins = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
+    f'http://{AppSettings().app_host}',
+    f'https://{AppSettings().app_host}',
+    f'http://{AppSettings().app_host}:{AppSettings().app_port}',
+    f'https://{AppSettings().app_host}:{AppSettings().app_port}',
+    f'http://localhost:5173',
+    f'http://127.0.0.1:5173',
 ]
 
 app.add_middleware(

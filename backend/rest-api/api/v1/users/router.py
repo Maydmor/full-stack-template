@@ -65,7 +65,7 @@ def activate_user(token: str, user_to_activate: DBUser = Depends(user_by_email),
     Authorize.jwt_required(token=token)
     user_email = Authorize.get_jwt_subject()
     user = user_service.get_user_by_email(db, user_email)
-    if user.id != user_to_activate.id:
+    if user.id != user_to_activate.id and user.profile.type != ProfileType.admin:
         raise HTTPException(status_code=403)
     active_user = user_service.update_user(db, user_to_activate, {'is_active': True})
     return f'User {active_user.email} succesfully activated'
