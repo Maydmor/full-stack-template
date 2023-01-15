@@ -1,0 +1,2 @@
+$outdir=Resolve-Path -Path ../internal/v1
+docker run --network="host" --rm -v "${outdir}:/local" openapitools/openapi-generator-cli generate -i http://host.docker.internal:8000/openapi.json -g typescript-axios -o /local/ --skip-validate-spec
