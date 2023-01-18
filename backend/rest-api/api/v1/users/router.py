@@ -3,13 +3,15 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Request,
 from database.models import User as DBUser
 from database.models.profile import ProfileType
 from database.services import user_service, profile_service
-from api.v1.schemas import ProfileUpdate, User, UserCreate, UserUpdate
+from api.v1.schemas import ProfileUpdate, User, UserCreate, UserUpdate, PasswordReset
 from api.v1.dependencies import get_db, user_by_email, check_admin, require_user
 from sqlalchemy.orm import Session
 import services.email as email_service
 from fastapi_jwt_auth import AuthJWT
 from security.rate_limit import limiter
+from security.password_util import hash_password
 import logging
+
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
@@ -77,3 +79,16 @@ def get_user(user: DBUser = Depends(user_by_email)):
 def send_activation_email(request: Request, background_tasks: BackgroundTasks, recipient_user: DBUser = Depends(user_by_email)):
     background_tasks.add_task(email_service.send_activation_email, recipient_user.email)
     return Response(status_code=status.HTTP_202_ACCEPTED)
+
+@router.post('/{email}/reset-password-email', operation_id='send_reset_password_email')
+@limiter.limit('1/minute')
+def send_reset_password_email(request: Request, background_tasks: BackgroundTasks, recipient_user: DBUser = Depends(user_by_email)):
+    background_tasks.add_task(email_service.send_reset_password_email, recipient_user.email)
+    return Response(status_code=status.HTTP_202_ACCEPTED)
+
+@router.put('/{email}/password', response_model=User, operation_id='reset_password')
+def reset_password(new_password: PasswordReset, user_to_reset: DBUser = Depends(user_by_email), user: DBUser = Depends(require_user), db: Session = Depends(get_db)):
+    if user.id != user_to_reset.id and user.profile.type != ProfileType.admin:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+    updated_user = user_service.update_user(db, user_to_reset, {'hashed_password': hash_password(new_password.password)})
+    return updated_user

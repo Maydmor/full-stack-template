@@ -54,3 +54,17 @@ async def send_activation_email(recipient: EmailStr):
     </html>
     """
     send_email('Activate your account', [recipient], template)
+
+async def send_reset_password_email(recipient: EmailStr):
+    token = AuthJWT().create_access_token(subject=recipient)
+    recovery_url = f'{AppSettings().app_web_url}/#/reset-password/{recipient}?token={token}'
+    template = f"""
+    <html>
+    <div>
+        Reset your password by clicking the link below
+        <br/>
+        <a href=\"{recovery_url}\">Reset password</a>
+    </div>
+    </html>
+    """
+    send_email('Reset password', [recipient], template)

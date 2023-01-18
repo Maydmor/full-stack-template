@@ -10,6 +10,7 @@ from database.models import ProfileAddress
 
 class UserUpdateFields(BaseModel):
     is_active: Optional[bool]
+    hashed_password: str
     class Config:
         use_enum_values = True
 

@@ -12,6 +12,9 @@ class UserUpdate(APISchema):
     """user fields that are updatable """
     pass
 
+class PasswordReset(APISchema):
+    password: str
+    
 class User(APISchema):
     email: EmailStr
     is_active: bool

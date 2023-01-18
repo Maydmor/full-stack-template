@@ -33,6 +33,11 @@ const router = createRouter({
           path: '/activate/:email',
           name: 'activation',
           component: () => import('../views/AccountActivationView.vue')
+        },
+        {
+          path: '/reset-password/:email',
+          name: 'reset-password',
+          component: () => import('../views/ResetPasswordView.vue')
         }
       ]
     }
