@@ -15,7 +15,6 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/:rw
   database:
     image: postgres
-    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -29,7 +28,6 @@ services:
   api:
     build: ./backend/rest-api
     # image: api:latest
-    restart: always
     ports:
       - 8000:80
     networks:
