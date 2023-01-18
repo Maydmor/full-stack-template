@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center my-auto">
         <div class="card w-96 bg-base-100 shadow-md" v-if="intent == Mode.register">
             <div class="card-body">
-                <h1 class="flex-1">Register</h1>
+                <h1 class="flex-1">Registrieren</h1>
                 <FormRegister v-model="newUser" class="w-full max-w-md"></FormRegister>
                 <div class="flex-1 flex justify-end">
                     <small class="w-full">Sie haben bereits ein Konto? <button class="link" @click.prevent="intent = Mode.login">Jetzt einloggen!</button></small>
@@ -15,7 +15,7 @@
         </div>
         <div class="card w-96 bg-base-100 shadow-md" v-if="intent == Mode.login">
             <div class="card-body">
-                <h1 class="flex-1">Login</h1>
+                <h1 class="flex-1">Anmelden</h1>
                 <FormLogin v-model="loginUser" class="w-full max-w-md"></FormLogin>
                 <div class="flex-1 flex justify-end"><button class="link text-xs" @click="intent = Mode.resetPassword">Passwort vergessen?</button></div>
                 <div class="flex-1 flex justify-end">
@@ -27,11 +27,11 @@
         </div>
         <div class="card w-96 bg-base-100 shadow-md" v-if="intent == Mode.resetPassword">
             <div class="card-body">
-                <h1 class="flex-1">Reset password</h1>
+                <h1 class="flex-1">Passwort zurücksetzem</h1>
                 <FieldInput v-model="resetPasswordEmail" :validation-rules="{ emailValidation, required }" label="E-Mail" class="w-full max-w-md"/>
                 <div class="flex-1 flex justify-end">
-                    <small class="w-full"><button class="link" @click.prevent="intent = Mode.login">Back to login</button></small>
-                    <button class="btn btn-primary btn-sm w-40 float-right " @click.prevent="sendResetPasswordMail">Reset password</button>
+                    <small class="w-full"><button class="link" @click.prevent="intent = Mode.login">Zurück zur Anmeldung</button></small>
+                    <button class="btn btn-primary btn-sm w-40 float-right " @click.prevent="sendResetPasswordMail">Passwort zurücksetzen</button>
                 </div>
                 <div v-if="!!resetPasswordMessage" class="text-sm text-center">{{ resetPasswordMessage }}</div>
                 <div v-if="!!resetPasswordError" class="text-error text-sm text-center">{{ resetPasswordError }}</div>
@@ -99,7 +99,7 @@ async function sendActivationEmail() {
     const api = useApi().users();
     api.sendActivationEmail(registeredUserEmail.value!)
     .then(() => {
-        registerMessage.value = 'Check your email inbox to activate your account.'
+        registerMessage.value = 'Überprüfen Sie Ihre E-Mails um Ihren Account zu aktivieren.'
     })
     .catch((error: AxiosError) => {
         registerError.value = error.message;
@@ -114,7 +114,7 @@ function sendResetPasswordMail() {
     const api = useApi().users()
     api.sendResetPasswordEmail(resetPasswordEmail.value)
     .then(() => {
-        resetPasswordMessage.value = 'Check your email inbox for further instructions.'
+        resetPasswordMessage.value = 'Überprüfen Sie Ihre E-Mails.'
     })
     .catch((error: AxiosError) => {
         resetPasswordError.value = error.message;
@@ -131,11 +131,11 @@ async function register() {
         console.log('Created user: ', response.data);
         registeredUserEmail.value = response.data.email;
         sendActivationEmail();
-        registerMessage.value = 'User succesfully created. Check your email inbox to activate your account.';
+        registerMessage.value = 'Benutzer erstellt. Überprüfen Sie Ihre E-Mails um Ihren Account zu aktivieren.';
     })
     .catch((error: AxiosError) => {
         if (error.response?.status == 409) {
-            registerError.value = 'The user with the given email already exists';
+            registerError.value = 'Es existiert bereits ein Benutzer mit dieser E-Mail-Adresse';
         }
         else {
             registerError.value = error.message;
@@ -157,7 +157,7 @@ async function login() {
     })
     .catch((error: AxiosError) => {
         if(error.response?.status == 401) {
-            loginError.value = 'Wrong email or password provided';
+            loginError.value = 'Falsche E-Mail oder Passwort.';
         }
         else {
             loginError.value = error.message;

@@ -2,11 +2,11 @@
     <div class="flex justify-center items-center my-auto">
         <div class="card w-96 bg-base-100 shadow-md">
             <div class="card-body">
-                <h1 class="flex-1">Reset password</h1>
+                <h1 class="flex-1">Passwort zurücksetzen</h1>
                 <FormResetPassword v-model="newPassword" class="w-full max-w-md"></FormResetPassword>
                 <div class="flex-1 flex justify-end">
-                    <small class="w-full"><RouterLink class="link" :to="{ name: 'auth' }">Back to login</RouterLink></small>
-                    <button class="btn btn-primary w-36 float-right " @click.prevent="resetPassword">Reset</button>
+                    <small class="w-full"><RouterLink class="link" :to="{ name: 'auth' }">Zurück zur Anmeldung</RouterLink></small>
+                    <button class="btn btn-primary w-36 float-right " @click.prevent="resetPassword">Speichern</button>
                 </div>
                 <div v-if="!!successMessage" class="text-sm text-center">{{ successMessage }}</div>
                 <div v-if="!!errorMessage" class="text-error text-sm text-center">{{ errorMessage }}</div>

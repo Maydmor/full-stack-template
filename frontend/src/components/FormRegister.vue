@@ -2,7 +2,7 @@
     <div class="flex flex-col space-y-4 p-2">
         <InputField type="email" v-model="user!.email" :validation-rules="{ emailRequired, emailInvalid }" label="E-Mail" class="w-full" />
         <InputField type="password" v-model="user!.password" :validation-rules="{ passwordRequired }" :label="$t('input.label.password')" class="w-full" />
-        <InputField type="password" v-model="retypePassword" :validation-rules="{ sameAsPassword }" label="Retype password" class="w-full" />
+        <InputField type="password" v-model="retypePassword" :validation-rules="{ sameAsPassword }" label="Passwort erneut eingeben" class="w-full" />
     </div>
 </template>
 

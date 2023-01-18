@@ -1,6 +1,5 @@
 <template>
     <div>
-        Activate account
         <span >{{message}}</span>
     </div>
 </template>
@@ -12,18 +11,17 @@ import { useRoute } from 'vue-router';
 
 
 const route = useRoute();
-const message = ref('activating account..');
+const message = ref('Account wird aktiviert..');
 const email = route.params.email.toString();
 const token = route.query.token?.toString() || '';
-console.log('Activagte user with email ', email, ' and token=', token);
 
 onMounted(() => {
     useApi().users(token).activateUser(email)
     .then(() => {
-        message.value = 'account activated. you can now login.'
+        message.value = 'Account aktiviert. Sie können sich jetzt anmelden.'
     })
     .catch((error: AxiosError) => {
-        message.value = 'could not activate account: ' + error.message;
+        message.value = 'Der Account konnte nicht aktiviert werden: ' + error.message;
     })
 
 })
