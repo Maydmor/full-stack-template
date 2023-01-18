@@ -1,0 +1,21 @@
+{
+	"button": {
+		"label": {
+			"login": "Anmelden",
+			"register": "Registrieren"
+		}
+	},
+	"input": {
+		"error": {
+			"email": {
+				"invalid": "E-Mail-Adresse ist keine gültige E-Mail-Adresse.",
+				"required": "E-Mail-Adresse wird benötigt"
+			},
+			"invalid": "Die eingegebene {label} ist ungültig",
+			"required": "{label} wird benötigt"
+		},
+		"label": {
+			"password": "Passwort"
+		}
+	}
+}

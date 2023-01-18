@@ -1,0 +1,21 @@
+{
+	"button": {
+		"label": {
+			"login": "Login",
+			"register": "Register"
+		}
+	},
+	"input": {
+		"error": {
+			"email": {
+				"invalid": "E-Mail is not a valid E-Mail address.",
+				"required": "Email is required"
+			},
+			"invalid": "the {label} you provided is not valid",
+			"required": "{label} is required"
+		},
+		"label": {
+			"password": "Password"
+		}
+	}
+}

@@ -77,13 +77,13 @@ export interface LoginResponse {
      * @type {string}
      * @memberof LoginResponse
      */
-    'access_token': string;
+    'accessToken': string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponse
      */
-    'refresh_token': string;
+    'refreshToken': string;
 }
 /**
  * 
@@ -142,6 +142,19 @@ export const ProfileType = {
 export type ProfileType = typeof ProfileType[keyof typeof ProfileType];
 
 
+/**
+ * 
+ * @export
+ * @interface RefreshTokenResponse
+ */
+export interface RefreshTokenResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof RefreshTokenResponse
+     */
+    'accessToken': string;
+}
 /**
  * 
  * @export
@@ -242,11 +255,11 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginLoginPost: async (username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        login: async (username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'username' is not null or undefined
-            assertParamExists('loginLoginPost', 'username', username)
+            assertParamExists('login', 'username', username)
             // verify required parameter 'password' is not null or undefined
-            assertParamExists('loginLoginPost', 'password', password)
+            assertParamExists('login', 'password', password)
             const localVarPath = `/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -304,7 +317,7 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshRefreshPost: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        refreshToken: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/refresh`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -350,8 +363,8 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginLoginPost(username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.loginLoginPost(username, password, grantType, scope, clientId, clientSecret, options);
+        async login(username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.login(username, password, grantType, scope, clientId, clientSecret, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -360,8 +373,8 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async refreshRefreshPost(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.refreshRefreshPost(options);
+        async refreshToken(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshTokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.refreshToken(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -386,8 +399,8 @@ export const SecurityApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginLoginPost(username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options?: any): AxiosPromise<LoginResponse> {
-            return localVarFp.loginLoginPost(username, password, grantType, scope, clientId, clientSecret, options).then((request) => request(axios, basePath));
+        login(username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options?: any): AxiosPromise<LoginResponse> {
+            return localVarFp.login(username, password, grantType, scope, clientId, clientSecret, options).then((request) => request(axios, basePath));
         },
         /**
          * The jwt_refresh_token_required() function insures a valid refresh token is present in the request before running any code below that function. we can use the get_jwt_subject() function to get the subject of the refresh token, and use the create_access_token() function again to make a new access token
@@ -395,8 +408,8 @@ export const SecurityApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshRefreshPost(options?: any): AxiosPromise<any> {
-            return localVarFp.refreshRefreshPost(options).then((request) => request(axios, basePath));
+        refreshToken(options?: any): AxiosPromise<RefreshTokenResponse> {
+            return localVarFp.refreshToken(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -421,8 +434,8 @@ export class SecurityApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public loginLoginPost(username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options?: AxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).loginLoginPost(username, password, grantType, scope, clientId, clientSecret, options).then((request) => request(this.axios, this.basePath));
+    public login(username: string, password: string, grantType?: string, scope?: string, clientId?: string, clientSecret?: string, options?: AxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).login(username, password, grantType, scope, clientId, clientSecret, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -432,8 +445,8 @@ export class SecurityApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public refreshRefreshPost(options?: AxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).refreshRefreshPost(options).then((request) => request(this.axios, this.basePath));
+    public refreshToken(options?: AxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).refreshToken(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -447,18 +460,14 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Activate User
-         * @param {string} token 
          * @param {string} email 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateUser: async (token: string, email: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'token' is not null or undefined
-            assertParamExists('activateUser', 'token', token)
+        activateUser: async (email: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'email' is not null or undefined
             assertParamExists('activateUser', 'email', email)
-            const localVarPath = `/users/{email}/activate/{token}`
-                .replace(`{${"token"}}`, encodeURIComponent(String(token)))
+            const localVarPath = `/users/{email}/activate`
                 .replace(`{${"email"}}`, encodeURIComponent(String(email)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -470,6 +479,10 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
 
 
     
@@ -656,6 +669,40 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Send Activation Email
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendActivationEmail: async (email: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'email' is not null or undefined
+            assertParamExists('sendActivationEmail', 'email', email)
+            const localVarPath = `/users/{email}/activation-email`
+                .replace(`{${"email"}}`, encodeURIComponent(String(email)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Patch User
          * @param {string} email 
          * @param {object} body 
@@ -711,13 +758,12 @@ export const UserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Activate User
-         * @param {string} token 
          * @param {string} email 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async activateUser(token: string, email: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.activateUser(token, email, options);
+        async activateUser(email: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.activateUser(email, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -775,6 +821,17 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Send Activation Email
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sendActivationEmail(email: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sendActivationEmail(email, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Patch User
          * @param {string} email 
          * @param {object} body 
@@ -798,13 +855,12 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Activate User
-         * @param {string} token 
          * @param {string} email 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateUser(token: string, email: string, options?: any): AxiosPromise<any> {
-            return localVarFp.activateUser(token, email, options).then((request) => request(axios, basePath));
+        activateUser(email: string, options?: any): AxiosPromise<any> {
+            return localVarFp.activateUser(email, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -856,6 +912,16 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @summary Send Activation Email
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendActivationEmail(email: string, options?: any): AxiosPromise<any> {
+            return localVarFp.sendActivationEmail(email, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Patch User
          * @param {string} email 
          * @param {object} body 
@@ -878,14 +944,13 @@ export class UserApi extends BaseAPI {
     /**
      * 
      * @summary Activate User
-     * @param {string} token 
      * @param {string} email 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public activateUser(token: string, email: string, options?: AxiosRequestConfig) {
-        return UserApiFp(this.configuration).activateUser(token, email, options).then((request) => request(this.axios, this.basePath));
+    public activateUser(email: string, options?: AxiosRequestConfig) {
+        return UserApiFp(this.configuration).activateUser(email, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -944,6 +1009,18 @@ export class UserApi extends BaseAPI {
      */
     public getUsers(options?: AxiosRequestConfig) {
         return UserApiFp(this.configuration).getUsers(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Send Activation Email
+     * @param {string} email 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public sendActivationEmail(email: string, options?: AxiosRequestConfig) {
+        return UserApiFp(this.configuration).sendActivationEmail(email, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
