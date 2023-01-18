@@ -10,20 +10,23 @@ from security.password_util import verify_password
 router = APIRouter()
 
 INVALID_CREDENTIALS_EXCEPTION = HTTPException(status_code=401, detail='invalid login credentials')
-
-@router.post('/login', response_model=LoginResponse)
+USER_NOT_ACTIVE_EXCEPTION = HTTPException(status_code=400, detail=f'the user is not active')
+@router.post('/login', response_model=LoginResponse, operation_id='login')
 def login(credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = get_user_by_email(db, credentials.username)
     if user is None:
         raise INVALID_CREDENTIALS_EXCEPTION
+    if not user.is_active:
+        raise USER_NOT_ACTIVE_EXCEPTION
     if not verify_password(credentials.password, user.hashed_password):
         raise INVALID_CREDENTIALS_EXCEPTION
+    
     Authorize = AuthJWT()
     access_token = Authorize.create_access_token(subject=credentials.username)
     refresh_token = Authorize.create_refresh_token(subject=credentials.username)
     return LoginResponse(access_token=access_token, refresh_token=refresh_token)
 
-@router.post('/refresh')
+@router.post('/refresh', response_model=RefreshTokenResponse, operation_id='refresh_token')
 def refresh(Authorize: AuthJWT = Depends()):
     """
     The jwt_refresh_token_required() function insures a valid refresh

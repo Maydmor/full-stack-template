@@ -5,6 +5,10 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from security.rate_limit import limiter
+
 from api.v1 import users_router, security_router
 from database import setup_database
 import logging
@@ -24,6 +28,10 @@ app = FastAPI(servers=[
         'url': f'http://{AppSettings().app_host}:{AppSettings().app_port}' 
     }
 ])
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 
 allowed_origins = [
     f'http://{AppSettings().app_host}',

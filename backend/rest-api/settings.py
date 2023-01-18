@@ -5,7 +5,6 @@ from pydantic_computed import Computed, computed
 HOSTNAME = 'localhost'
 PORT = 8000
 
-
 class Settings(BaseSettings):
     class Config:
         env_file = '.env', '.env.prod'
@@ -13,6 +12,12 @@ class Settings(BaseSettings):
 class AppSettings(Settings):
     app_host: str = HOSTNAME
     app_port: int = PORT
+    app_web_host: str = 'localhost'
+    app_web_port: int = 5173
+    app_web_url: Computed[str]
+    @computed('app_web_url')
+    def compute_web_url(app_web_host: str, app_web_port: int, **kwargs):
+        return f'http://{app_web_host}:{app_web_port}'
 
 class DatabaseSettings(Settings):
     database_username: str

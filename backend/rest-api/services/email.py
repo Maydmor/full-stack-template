@@ -43,15 +43,13 @@ def send_email(subject: str, recipients: List[EmailStr], body = DEMO_TEMPLATE):
 
 async def send_activation_email(recipient: EmailStr):
     activation_token = AuthJWT().create_access_token(subject=recipient)
-    activation_url = f'http://{AppSettings().app_host}:{AppSettings().app_port}/users/{recipient}/activate/{activation_token}'
+    activation_url = f'{AppSettings().app_web_url}/#/activate/{recipient}?token={activation_token}'
     template = f"""
     <html>
     <div>
         Activate your account by clicking on the button below
         <br/>
-        <form action=\"{activation_url}\">
-            <input type=\"submit\" value=\"Activate account\"/>
-        </form>
+        <a href=\"{activation_url}\">Activate account</a>
     </div>
     </html>
     """
