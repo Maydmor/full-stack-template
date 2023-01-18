@@ -50,7 +50,7 @@ import router from '@/router';
 import { useAuthStore } from '@/stores/auth';
 import useVuelidate from '@vuelidate/core';
 import { AxiosError } from 'axios';
-import { reactive, ref, watch, computed, toRefs } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { email as emailValidation, required } from '@vuelidate/validators';
 import { useRoute } from 'vue-router';
 
