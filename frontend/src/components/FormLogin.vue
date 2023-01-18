@@ -6,10 +6,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, watch, type PropType } from 'vue'
+import { type PropType } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
-import { ProfileType, type UserCreate } from '@/api/internal/v1'
 import { useVModel } from '@vueuse/core'
 import InputField from './FieldInput.vue'
 import { useI18n } from 'vue-i18n'
@@ -28,6 +27,7 @@ emailInvalid.$message = t('input.error.email.invalid');
 emailRequired.$message = t('input.error.email.required');
 
 const user = useVModel(props, 'modelValue');
+/*eslint-disable*/
 const v = useVuelidate();
-
+/*eslint-enable*/
 </script>

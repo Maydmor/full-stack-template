@@ -7,13 +7,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, computed, ref, type PropType } from 'vue'
+import { computed, ref, type PropType } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, sameAs } from '@vuelidate/validators'
-import { ProfileType, type UserCreate } from '@/api/internal/v1'
+import { type UserCreate } from '@/api/internal/v1'
 import { useVModel } from '@vueuse/core'
 import InputField from './FieldInput.vue'
 import { useI18n } from 'vue-i18n'
+
 const props = defineProps({
     modelValue: {
         type: Object as PropType<UserCreate>
@@ -32,6 +33,8 @@ emailInvalid.$message = t('input.error.email.invalid');
 emailRequired.$message = t('input.error.email.required');
 
 const retypePassword = ref('');
+/*eslint-disable*/
 const v = useVuelidate();
+/*eslint-enable*/
 
 </script>

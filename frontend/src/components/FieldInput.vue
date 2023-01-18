@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs } from '@vue/reactivity';
+import { toRefs } from 'vue';
 import useVuelidate, { ValidationRule } from '@vuelidate/core';
 import { useVModel } from '@vueuse/core';
 import { defineComponent, PropType, reactive, watch } from 'vue';

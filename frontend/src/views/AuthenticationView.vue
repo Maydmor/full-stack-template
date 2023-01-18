@@ -32,6 +32,7 @@ import { ProfileType, UserCreate } from '@/api/internal/v1';
 import FormLogin from '@/components/FormLogin.vue';
 import FormRegister from '@/components/FormRegister.vue';
 import { useApi } from '@/composables/useApi';
+import router from '@/router';
 import { useAuthStore } from '@/stores/auth';
 import useVuelidate from '@vuelidate/core';
 import { AxiosError } from 'axios';
@@ -82,10 +83,8 @@ async function register() {
     api.createUser(newUser).then((response) => {
         console.log('Created user: ', response.data);
         registeredUserEmail.value = response.data.email;
-        // newUser.email = '';
-        // newUser.password = '';
         sendActivationEmail();
-        registerMessage.value = 'User succesfully created. Check your email inbox to activate your account.'
+        registerMessage.value = 'User succesfully created. Check your email inbox to activate your account.';
     })
     .catch((error: AxiosError) => {
         if (error.response?.status == 409) {
@@ -105,9 +104,9 @@ async function login() {
     
     useApi().security().login(loginUser.email, loginUser.password)
     .then((response) => {
-        console.log('retrieved access token: ', response.data.accessToken)
+        console.log('retrieved access token: ', response.data.accessToken);
         useAuthStore().setUserToken(response.data.accessToken);
-
+        router.push({name: 'home'});
     })
     .catch((error: AxiosError) => {
         if(error.response?.status == 401) {

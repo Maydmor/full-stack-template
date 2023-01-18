@@ -15,9 +15,13 @@ module.exports = {
       ],
       'extends': [
         'plugin:cypress/recommended'
-      ]
-    }
+      ],
+    },
+    
   ],
+  rules: {
+    'vue/no-dupe-keys': 'off'
+  },
   parserOptions: {
     ecmaVersion: 'latest'
   }

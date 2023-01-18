@@ -6,8 +6,7 @@
 </template>
 <script lang="ts" setup>
 import { useApi } from '@/composables/useApi';
-import { useAuthStore } from '@/stores/auth';
-import { Axios, AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -20,7 +19,7 @@ console.log('Activagte user with email ', email, ' and token=', token);
 
 onMounted(() => {
     useApi().users(token).activateUser(email)
-    .then((response) => {
+    .then(() => {
         message.value = 'account activated. you can now login.'
     })
     .catch((error: AxiosError) => {
