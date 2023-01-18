@@ -73,7 +73,7 @@ def get_user(user: DBUser = Depends(user_by_email)):
     return user
 
 @router.post('/{email}/activation-email', operation_id='send_activation_email')
-# @limiter.limit('1/minute')
+@limiter.limit('1/minute')
 def send_activation_email(request: Request, background_tasks: BackgroundTasks, recipient_user: DBUser = Depends(user_by_email)):
     background_tasks.add_task(email_service.send_activation_email, recipient_user.email)
     return Response(status_code=status.HTTP_202_ACCEPTED)
