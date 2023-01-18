@@ -1,5 +1,8 @@
 {
 	"button": {
+		"logout": "Log out",
+		"login": "Log in",
+		"register": "Sign up", 
 		"label": {
 			"login": "Login",
 			"register": "Register"

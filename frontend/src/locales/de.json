@@ -1,5 +1,8 @@
 {
 	"button": {
+		"logout": "Abmelden",
+		"login": "Anmelden",
+		"register": "Registrieren", 
 		"label": {
 			"login": "Anmelden",
 			"register": "Registrieren"

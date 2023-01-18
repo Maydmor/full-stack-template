@@ -25,7 +25,7 @@ const router = createRouter({
           }
         },
         {
-          path: '/auth',
+          path: '/auth/:intent',
           name: 'auth',
           component: () => import('../views/AuthenticationView.vue'),
         },
